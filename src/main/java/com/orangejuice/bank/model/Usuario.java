@@ -1,16 +1,33 @@
 package com.orangejuice.bank.model;
 
-import javax.persistence.Entity;
-import org.springframework.data.jpa.repository.JpaRepository;
-import java.util.Optional;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Usuario {
-    // Add fields, constructors, getters, and setters here as needed
-}
 
-public interface UsuarioRepository extends JpaRepository<Usuario, UUID> {
-    Optional<Usuario> findByEmail(String email);
-    Optional<Usuario> findByCpf(String cpf);
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
+
+    private String nome;
+
+    @Column(unique = true)
+    private String email;
+
+    @Column(unique = true)
+    private String cpf;
+
+    private BigDecimal saldo;
+
+    private String senha;
+
+    private String numeroConta;
 }
