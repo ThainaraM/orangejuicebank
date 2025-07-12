@@ -5,8 +5,8 @@ import com.orangejuice.bank.repository.UsuarioRepository;
 
 import java.math.BigDecimal;
 import java.util.List;
-
 import org.springframework.stereotype.Service;
+
 @Service
 public class UsuarioService {
 
@@ -28,20 +28,27 @@ public class UsuarioService {
         return repository.findById(id).orElse(null);
     }
 
-     public Usuario depositar(Long id, BigDecimal valor) {
-    Usuario usuario = buscarPorId(id);
-    if (usuario == null) return null;
+    public Usuario depositar(Long id, BigDecimal valor) {
+        if (valor == null || valor.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Valor de depósito deve ser positivo.");
+        }
 
-    usuario.setSaldo(usuario.getSaldo().add(valor));
-    return repository.save(usuario);
-}
+        Usuario usuario = buscarPorId(id);
+        if (usuario == null) return null;
 
-public Usuario sacar(Long id, BigDecimal valor) {
-    Usuario usuario = buscarPorId(id);
-    if (usuario == null || usuario.getSaldo().compareTo(valor) < 0) return null;
+        usuario.setSaldo(usuario.getSaldo().add(valor));
+        return repository.save(usuario);
+    }
 
-    usuario.setSaldo(usuario.getSaldo().subtract(valor));
-    return repository.save(usuario);
-}
+    public Usuario sacar(Long id, BigDecimal valor) {
+        if (valor == null || valor.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new IllegalArgumentException("Valor de saque deve ser positivo.");
+        }
 
+        Usuario usuario = buscarPorId(id);
+        if (usuario == null || usuario.getSaldo().compareTo(valor) < 0) return null;
+
+        usuario.setSaldo(usuario.getSaldo().subtract(valor));
+        return repository.save(usuario);
+    }
 }
