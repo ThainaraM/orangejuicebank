@@ -5,8 +5,9 @@ import lombok.*;
 
 import java.math.BigDecimal;
 
+import org.springframework.stereotype.Service;
 
-@Entity
+@Service
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
