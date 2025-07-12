@@ -3,16 +3,11 @@ package com.orangejuice.bank.service;
 import com.orangejuice.bank.model.Usuario;
 import com.orangejuice.bank.repository.UsuarioRepository;
 
-import jakarta.persistence.Entity;
-
 import java.math.BigDecimal;
 import java.util.List;
 
-
-
-@Entity
-
-
+import org.springframework.stereotype.Service;
+@Service
 public class UsuarioService {
 
     private final UsuarioRepository repository;

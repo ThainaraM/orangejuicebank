@@ -5,9 +5,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 
-import org.springframework.stereotype.Service;
-
-@Service
+@Entity   // <-- esta anotação é OBRIGATÓRIA para entidade JPA
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -32,3 +30,4 @@ public class Usuario {
 
     private String numeroConta;
 }
+
