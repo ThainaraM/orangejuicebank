@@ -28,4 +28,3 @@ public class UsuarioService {
         return repository.findById(id).orElse(null);
     }
 }
-
