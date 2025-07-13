@@ -18,7 +18,7 @@ POST http://localhost:8083/api/transacoes/depositar
 Content-Type: application/json
 
 {
-  "contaId": 3,
+  "contaId": 1,
   "valor": 100
 }
 
@@ -29,6 +29,6 @@ POST http://localhost:8083/api/transacoes/sacar
 Content-Type: application/json
 
 {
-  "contaId": 3,
+  "contaId": 1,
   "valor": 50
 }
