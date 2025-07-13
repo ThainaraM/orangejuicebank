@@ -2,21 +2,31 @@ package com.orangejuice.bank.service;
 
 import com.orangejuice.bank.model.Usuario;
 import com.orangejuice.bank.repository.UsuarioRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
-import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class UsuarioService {
 
     private final UsuarioRepository repository;
 
-    public UsuarioService(UsuarioRepository repository) {
-        this.repository = repository;
-    }
+    public Usuario criarUsuario(Usuario usuario) {
+        if (usuario.getEmail() == null || usuario.getCpf() == null) {
+            throw new IllegalArgumentException("Email e CPF são obrigatórios.");
+        }
 
-    public Usuario criar(Usuario usuario) {
+        if (repository.existsByEmail(usuario.getEmail())) {
+            throw new IllegalArgumentException("Email já cadastrado.");
+        }
+
+        if (repository.existsByCpf(usuario.getCpf())) {
+            throw new IllegalArgumentException("CPF já cadastrado.");
+        }
+
         return repository.save(usuario);
     }
 
@@ -24,8 +34,9 @@ public class UsuarioService {
         return repository.findAll();
     }
 
-    public Usuario buscarPorId(long id) {
-        return repository.findById(id).orElse(null);
+    public Usuario buscarPorId(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Usuário não encontrado"));
     }
 
     public Usuario depositar(Long id, BigDecimal valor) {
@@ -34,8 +45,6 @@ public class UsuarioService {
         }
 
         Usuario usuario = buscarPorId(id);
-        if (usuario == null) return null;
-
         usuario.setSaldo(usuario.getSaldo().add(valor));
         return repository.save(usuario);
     }
@@ -46,9 +55,20 @@ public class UsuarioService {
         }
 
         Usuario usuario = buscarPorId(id);
-        if (usuario == null || usuario.getSaldo().compareTo(valor) < 0) return null;
+
+        if (usuario.getSaldo().compareTo(valor) < 0) {
+            throw new IllegalArgumentException("Saldo insuficiente.");
+        }
 
         usuario.setSaldo(usuario.getSaldo().subtract(valor));
         return repository.save(usuario);
     }
+    public void excluir(Long id) {
+        if (!repository.existsById(id)) {
+            throw new IllegalArgumentException("Usuário não encontrado");
+        }
+        repository.deleteById(id);
+    }
+   
+
 }
