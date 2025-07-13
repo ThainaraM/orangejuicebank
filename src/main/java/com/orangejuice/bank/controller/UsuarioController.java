@@ -3,6 +3,9 @@ package com.orangejuice.bank.controller;
 import java.math.BigDecimal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,5 +33,8 @@ public class UsuarioController {
         int parte2 = (int)(Math.random() * 9) + 1;
         return parte1 + "-" + parte2;
     }
-}
+   
+    }
+
+
 
