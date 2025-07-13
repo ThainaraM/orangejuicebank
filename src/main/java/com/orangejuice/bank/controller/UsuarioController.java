@@ -29,10 +29,10 @@ public class UsuarioController {
     }
     @GetMapping("/{id}/saldo")
     public ResponseEntity<BigDecimal> consultarSaldo(@PathVariable Long id) {
-      return usuarioRepository.findById(id)
+    return usuarioRepository.findById(id)
         .map(usuario -> ResponseEntity.ok(usuario.getSaldo()))
         .orElse(ResponseEntity.notFound().build());
-}
+    }
 
     private String gerarNumeroConta() {
         int parte1 = (int)(Math.random() * 90000) + 10000;
