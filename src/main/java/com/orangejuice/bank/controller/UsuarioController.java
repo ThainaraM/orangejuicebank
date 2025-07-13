@@ -27,14 +27,18 @@ public class UsuarioController {
         usuario.setNumeroConta(gerarNumeroConta());
         return usuarioRepository.save(usuario);
     }
+    @GetMapping("/{id}/saldo")
+    public ResponseEntity<BigDecimal> consultarSaldo(@PathVariable Long id) {
+      return usuarioRepository.findById(id)
+        .map(usuario -> ResponseEntity.ok(usuario.getSaldo()))
+        .orElse(ResponseEntity.notFound().build());
+}
 
     private String gerarNumeroConta() {
         int parte1 = (int)(Math.random() * 90000) + 10000;
         int parte2 = (int)(Math.random() * 9) + 1;
         return parte1 + "-" + parte2;
     }
-   
-    }
-
-
+    
+}
 
