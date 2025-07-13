@@ -24,9 +24,6 @@ public ResponseEntity<Account> depositar(@RequestBody DepositoDTO dto) {
 public ResponseEntity<Account> sacar(@RequestBody SaqueDTO dto) {
     Account contaAtualizada = transactionService.sacar(dto.getContaId(), dto.getValor());
     return ResponseEntity.ok(contaAtualizada);
-}
-
-    public TransactionService getTransactionService() {
-        return transactionService;
-    }
+ }
+  
 }
