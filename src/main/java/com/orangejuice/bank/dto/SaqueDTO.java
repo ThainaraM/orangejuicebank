@@ -1,8 +1,10 @@
-
 package com.orangejuice.bank.dto;
 
-import lombok.Data;
-@Data
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class SaqueDTO {
     private Long contaId;
     private Double valor;

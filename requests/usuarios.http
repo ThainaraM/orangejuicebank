@@ -14,19 +14,21 @@ Content-Type: application/json
 ###
 
 ### Depositar R$100 na conta do usuário com ID 1
-POST http://localhost:8083/usuarios/1/depositar
+POST http://localhost:8083/api/transacoes/depositar
 Content-Type: application/json
 
 {
+  "contaId": 3,
   "valor": 100
 }
 
 ###
 
 ### Sacar R$50 da conta do usuário com ID 1
-POST http://localhost:8083/usuarios/1/sacar
+POST http://localhost:8083/api/transacoes/sacar
 Content-Type: application/json
 
 {
+  "contaId": 3,
   "valor": 50
 }
