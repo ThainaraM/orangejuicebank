@@ -1,5 +1,7 @@
 package com.orangejuice.bank.service;
 
+
+import com.orangejuice.bank.exception.ContaNaoEncontradaException;
 import com.orangejuice.bank.model.Conta;
 import com.orangejuice.bank.model.Usuario;
 import com.orangejuice.bank.repository.ContaRepository;
@@ -30,8 +32,9 @@ public class ContaService {
     }
 
     public Conta buscarContaPorId(Long id) {
-        return contaRepository.findById(id).orElseThrow(() -> new RuntimeException("Conta não encontrada"));
-    }
+        return contaRepository.findById(id)
+            .orElseThrow(() -> new ContaNaoEncontradaException(id));
+  }
 
     public BigDecimal consultarSaldo(Long contaId) {
         Conta conta = buscarContaPorId(contaId);
@@ -39,10 +42,14 @@ public class ContaService {
     }
 
     public Conta depositar(Long contaId, BigDecimal valor) {
-        Conta conta = buscarContaPorId(contaId);
-        conta.setSaldo(conta.getSaldo().add(valor));
-        return contaRepository.save(conta);
+    if (valor == null || valor.compareTo(BigDecimal.ZERO) <= 0) {
+        throw new IllegalArgumentException("Valor do depósito deve ser maior que zero");
     }
+
+    Conta conta = buscarContaPorId(contaId);
+    conta.setSaldo(conta.getSaldo().add(valor));
+    return contaRepository.save(conta);
+  }
 
     public Conta sacar(Long contaId, BigDecimal valor) {
         Conta conta = buscarContaPorId(contaId);
@@ -67,5 +74,6 @@ public class ContaService {
         contaRepository.save(origem);
         contaRepository.save(destino);
     }
+    
 }
 

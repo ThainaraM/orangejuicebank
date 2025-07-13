@@ -19,6 +19,16 @@ public class GlobalExceptionHandler {
         );
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler(ContaNaoEncontradaException.class)
+public ResponseEntity<ApiError> handleContaNaoEncontrada(ContaNaoEncontradaException ex, HttpServletRequest request) {
+    ApiError error = new ApiError(
+            HttpStatus.NOT_FOUND.value(),
+            HttpStatus.NOT_FOUND.getReasonPhrase(),
+            ex.getMessage(),
+            request.getRequestURI()
+    );
+    return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+}
 
     // aqui você pode adicionar mais handlers para outras exceções
 }

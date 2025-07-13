@@ -31,11 +31,10 @@ public class ContaController {
         return contaService.consultarSaldo(id);
     }
 
-    @PostMapping("/{id}/deposito")
+   @PostMapping("/{id}/deposito")
     public Conta depositar(@PathVariable Long id, @RequestBody Map<String, BigDecimal> body) {
-        BigDecimal valor = body.get("valor");
-        return contaService.depositar(id, valor);
-    }
+    return contaService.depositar(id, body.get("valor"));
+}
 
     @PostMapping("/{id}/saque")
     public Conta sacar(@PathVariable Long id, @RequestBody Map<String, BigDecimal> body) {
